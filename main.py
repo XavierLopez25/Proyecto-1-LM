@@ -12,3 +12,16 @@ import re
 #    [^"]*$       # Match any number of non-quote characters until the end of the line
 # )'              # End of the lookahead assertion
 regex_pattern = r',(?=(?:[^"]*"[^"]*")*[^"]*$)'
+
+# Initialize an empty list to hold each row's data
+data_rows = []
+
+# Read the file line by line
+with open("BL-Flickr-Images-Book.csv", "r", encoding='utf-8') as file:
+    headers = next(file).strip().split(',')  # Extract headers separately
+    for line in file:
+        # Split the line using regex to handle commas within quotes
+        fields = re.split(regex_pattern, line.strip())
+        # Clean up any double quotes encapsulating fields
+        fields = [field.strip('"') for field in fields]
+        data_rows.append(fields)
