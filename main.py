@@ -13,12 +13,17 @@ import re
 # )'              # End of the lookahead assertion
 regex_pattern = r',(?=(?:[^"]*"[^"]*")*[^"]*$)'
 
+# Pattern that matches by 
+header_pattern = r'[^,]+'
+
 # Initialize an empty list to hold each row's data
 data_rows = []
 
 # Read the file line by line
 with open("BL-Flickr-Images-Book.csv", "r", encoding='utf-8') as file:
-    headers = next(file).strip().split(',')  # Extract headers separately
+    # headers = next(file).strip().split(',')  # Extract headers separately
+    headers = re.findall(header_pattern, next(file).strip()) # Extract headers separately
+
     for line in file:
         # Split the line using regex to handle commas within quotes
         fields = re.split(regex_pattern, line.strip())
@@ -26,8 +31,12 @@ with open("BL-Flickr-Images-Book.csv", "r", encoding='utf-8') as file:
         fields = [field.strip('"') for field in fields]
         data_rows.append(fields)
 
+
 # Create a DataFrame from the list of rows
 df_from_regex = pd.DataFrame(data_rows, columns=headers)
+
+print(len(df_from_regex.columns))
+
 
 # Convert the DataFrame to a string format with line breaks between rows
 df_string = df_from_regex.head(100).to_string()
