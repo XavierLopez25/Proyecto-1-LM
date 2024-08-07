@@ -33,7 +33,7 @@ def categorize_and_sort_characters(characters):
         'Greek Lowercase': set(),
         'Greek Uppercase': set(),
         'Digits': set(),
-        'Other Characters': set()  # Aquí puedes incluir todo lo que no se ajuste a las categorías anteriores
+        'Other Characters': set()
     }
     
     # Clasificar cada carácter en el conjunto apropiado
